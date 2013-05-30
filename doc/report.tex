@@ -36,18 +36,49 @@
 \pagestyle{myheadings}  % Leave this command alone
 
 \section{Task 1}
-1. Report the NDCG performance achieved on the development test data.
+For this task, we use sublinear scaling and inverse document frequency when constructing query vectors.
+For document vectors, we use term frequency (without any scaling) and length normalization.
+For length normalization, we naively divide all fields by the same normalization factor, which is
+body length adding a smooth constant $500$.
 
-2. How does this score compared to the performance obtained using the weights manually set in PA3? Do the values of $w^∗$ make sense (e.g., should a field be weighed higher than another)? Report your finding.
+1. Report the NDCG performance achieved on the development test data. How does this score compared to the performance obtained using the weights manually set in PA3?
+
+The NDCG performance on the development test data is $0.8494$, compared to the NDCG score $0.8662$ achieved in PA3. 
+
+2. Do the values of $w^*$ make sense (e.g., should a field be weighed higher than another)? Report your finding.
+
+The weights learned in this task and manually tuned in PA3 are compared in Table \ref{tab:wt}.
+As we can see from Table \ref{tab:wt}, there are some similarities between them (i.e. both put low weights on body fields).
+According to the weights produced by linear regression, title field is the most important feature. On the other hand,
+anchor field is the least important feature, which is questionable. Since linear regression is not robust with outliers,
+the learned weights are not reliable enough to make any importance judgements.
+\begin{table}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+  \hline
+  Weight $w^*$ & $w_\textrm{title}$ & $w_\textrm{url}$ & $w_\textrm{header}$ & $w_\textrm{body}$ & $w_\textrm{anchor}$ \\
+  \hline
+  Pointwise linear regression weights & $44.6$ & $19.6$ & $16.0$ & $2.2$ & $0.4$ \\
+  \hline
+  Weights manually tuned in PA3 & $1.0$ & $0.1$ & $0.5$ & $0.3$ & $2.0$ \\
+  \hline
+\end{tabular}
+\caption{Weights obtained by two different approaches}\label{tab:wt}
+\end{center}
+\end{table}
+
 
 \section{Task 2}
-1. Report the
-NDCG performance achieved on the development test data.
+In this task we use the same feature as in task 1, but we operate in the pairwise space.
+
+1. Report the NDCG performance achieved on the development test data.
+
+The NDCG score on the development test data is $0.8627$.
 
 
 2. Compare your ranking outputs given by the linear regression and the ranking SVM.
 Find 2-3 queries in which results of one method are markedly different from those
-of the other and use your relevance score file to judge which one is better.2
+of the other and use your relevance score file to judge which one is better.
 Then, for each of these queries, pick a URL and examine the train data file (or the
 page content) with reference to the weight vectors learned to find out why that
 URL is ranked higher/lower in one method and lower/higher in the other. Report
@@ -62,7 +93,7 @@ for these combinations.
 
 2. Document your choices in the report
 
-3. 
+3.
 Examine your ranking output, list 1-2 types of errors that your system tends
 to make, and suggest features to fix them. Do they help fix the problems you
 observed? What about the NDCG scores achieved on the development test data?
