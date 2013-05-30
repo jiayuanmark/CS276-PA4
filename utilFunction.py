@@ -339,7 +339,7 @@ def build_rich_features(queries, documents):
           val /= fld_len[key]
         feat.append(val)
 
-
+      
       # url ends in PDF
       if x.endswith('.pdf'):
         feat.append(1)
@@ -348,7 +348,7 @@ def build_rich_features(queries, documents):
       
       # BM25F
       feat.append(BM25F_score(qvec, term_vec, fld_len, avglen))
-
+      
       # title window
       feat.append(compute_window(qitem, title.split()))
       
@@ -375,10 +375,10 @@ def build_rich_features(queries, documents):
       '''
       # page rank
       feat.append(documents[query][x]['pagerank'])
-      '''
+      
       # title index
       feat.append(compute_mini_index(qitem, title.split()))
-
+      '''
       # url index
       feat.append(compute_mini_index(qitem, url.split()))
       

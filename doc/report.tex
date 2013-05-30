@@ -45,10 +45,10 @@ In the rest of this document, we will describe our methodology and findings.
 \begin{tabular}{|c|c|c|}
   \hline
   Task & Method & Test NDCG \\\hline
-  1 &  Linear Regression (Pointwise) & 0.8563 \\\hline
+  1 &  Linear Regression (Pointwise) & 0.8562 \\\hline
   2 & SVM (Pairwise)  & 0.8623 \\\hline
-  3 & SVM with rich features (Pairwise)  & 0.8817 \\ \hline
-  Extra & PRank & 0.8439   \\\hline
+  3 & SVM with rich features (Pairwise)  & 0.8818 \\ \hline
+  Extra & PRank & 0.8447 \\\hline
 \end{tabular}
 \caption{Summary of results}\label{tab:all}
 \end{center}
@@ -66,7 +66,7 @@ As we did in PA3, we represent each query-page pair as a vector of five features
 \end{itemize}
 
 The weights learned in this task and manually tuned in PA3 are compared in Table \ref{tab:wt}.
-The NDCG performance on the development test data is $0.8632$, compared to the NDCG score $0.8662$ achieved in PA3.
+The NDCG performance on the development test data is $0.8563$, compared to the NDCG score $0.8662$ achieved in PA3.
 As we can see from Table \ref{tab:wt}, there are not any significant similarities between them.
 According to the weights produced by linear regression, body field is the most important feature. On the other hand,
 anchor field is the least important feature, which is questionable. Since linear regression is not robust with outliers,
@@ -78,7 +78,7 @@ the learned weights are not reliable enough to make any importance judgements.
   \hline
   Method & $w_\textrm{title}$ & $w_\textrm{url}$ & $w_\textrm{header}$ & $w_\textrm{body}$ & $w_\textrm{anchor}$ & NDCG \\
   \hline
-  Pointwise linear regression weights & $0.20$ & $0.59$ & $0.12$ & $1.45$ & $0.00$ & $0.8632$ \\
+  Pointwise linear regression weights & $0.20$ & $0.59$ & $0.12$ & $1.45$ & $0.00$ & $0.8563$ \\
   \hline
   Weights manually tuned in PA3 & $1.0$ & $0.1$ & $0.5$ & $0.3$ & $2.0$ & 0.8662 \\
   \hline
@@ -95,7 +95,7 @@ For any pairs of query-document vector features $\mathbf{x}_i, \mathbf{x}_j$, we
 Because SVMs are not robust to high diversity in values of feature,
 we do standardization on the features.
 
-The NDCG score on the development test data is $0.8688$.
+The NDCG score on the development test data is $0.8623$.
 
 
 Compare your ranking outputs given by the linear regression and the ranking SVM.
@@ -178,27 +178,27 @@ We build features, calculate the differences between features vectors, and feed 
 performance. Report the NDCG scores achieved on the development test data
 for these combinations.
 
-After experimenting with the above features, the best NDCG score achieved on the development test data is $0.8871$.
+After experimenting with the above features, the best NDCG score achieved on the development test data is $0.8817$.
 We use all the above features except the smallest window feature for anchor fields.
 Since anchor fields are short, smallest windows in anchor fields are usually missing and uninformative.
 Therefore, it is reasonable to exclude this feature from our feature set.
 
-By dropping one feature at a time, we experiments with different combinations of features to see the contributions of different features. As observed from Table \ref{tab:perform}, we see BM25F score, Page Rank and smallest windows in body fields are huge boosters for performance.
+By dropping one feature at a time, we experiment with different combinations of features to see the contributions of different features. As observed from Table \ref{tab:perform}, we see BM25F score, Page Rank and smallest windows in body fields are huge boosters for performance.
 \begin{table}
 \begin{center}
 \begin{tabular}{|l|l|}
   \hline
   Leaving out feature & NDCG score \\
   \hline
-  Binary ''.pdf'' feature & $0.8868$ \\
-  BM25F score & $0.8829$ \\
-  Title window & $0.8849$ \\
-  URL window & $0.8841$ \\
-  Body window & $0.8829$ \\
-  Header window & $0.8858$ \\
-  Anchor window & $\mathbf{0.8871}$ \\
-  Page Rank & $0.8822$ \\
-  None & $0.8854$ \\
+  Binary ''.pdf'' feature & $0.8801$ \\
+  BM25F score & $0.8738$ \\
+  Title window & $0.8790$ \\
+  URL window & $0.8761$ \\
+  Body window & $0.8772$ \\
+  Header window & $0.8804$ \\
+  Anchor window & $\mathbf{0.8817}$ \\
+  Page Rank & $0.8750$ \\
+  None & $0.8800$ \\
   \hline
 \end{tabular}
 \caption{NDCG scores with different feature combinations}\label{tab:perform}
@@ -212,18 +212,23 @@ observed? What about the NDCG scores achieved on the development test data?
 Report your finding. You could also propose new features that help improve performance.
 Report the best NDCG score achieved on the development test data.
 
-\textbf{TODO}
+In our system described above, we found that we tend to rank documents that have earlier occurrence of query terms
+lower than they should rank. Such example queries are \verb|marguerite| and \verb|sunet login|.
+In order to deal with this kind of errors, we add new features that capture the earliest appearance of query terms in
+different fields.
+Using the same kind of ``leaving-out'' experiments, we found that the earliest appearance of query terms in title fields
+does help to improve the performance, which increase our final NDCG score to $0.8818$.
 
 
 \section*{Extra Credit (PRank)}
 
-We use PRank to rank the document relevance. The relevance in training data is derived by averaging editor's opinions, and can be a fraction, and not an integer. 
-We approximate the relevance to the nearest integer by rounding before we need the relevence into PRank.  
+We use PRank to rank the document relevance. The relevance in training data is derived by averaging editor's opinions, and can be a fraction, and not an integer.
+We approximate the relevance to the nearest integer by rounding before we need the relevence into PRank.
 
 The NDCG score achieved by PRank algorithm on the development test data is $0.8468$, compared to $0.8632$ in task 1.
 
-PRank has not only 5 paramemters for weights, and it also has 4 threshold parameters $b$ while Linear regression has only 5 parameters. 
-Due to a lack of data, even though PRank has more expressibility models, it is also easier to be underfitted. That's why It has lower performance than the linear regression. 
+PRank has not only 5 paramemters for weights, and it also has 4 threshold parameters $b$ while Linear regression has only 5 parameters.
+Due to a lack of data, even though PRank has more expressibility models, it is also easier to be underfitted. That's why It has lower performance than the linear regression.
 
 \end{document}
 
