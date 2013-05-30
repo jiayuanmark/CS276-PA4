@@ -107,7 +107,7 @@ def extra_test_features(test_data_file):
   return (X, queries, index_map)
 
 def extra_learning(X, y):
-  model = linear_model.LinearRegression()
+  model = prank.PRank()
   model.fit(X, y)
   return model
 
@@ -124,22 +124,35 @@ def train(train_data_file, train_rel_file, task):
   if task == 1:
     (X, y) = pointwise_train_features(train_data_file, train_rel_file)
     model = pointwise_learning(X, y)
+    # some debug output
+    weights = model.coef_
+    print >> sys.stderr, "Weights:", str(weights)
+
   elif task == 2:
     (X, y) = pairwise_train_features(train_data_file, train_rel_file)
     model = pairwise_learning(X, y)
+    # some debug output
+    weights = model.coef_
+    print >> sys.stderr, "Weights:", str(weights)
+
   elif task == 3: 
     (X, y) = task3_train_features(train_data_file, train_rel_file)
     model = task3_learning(X, y)
+    # some debug output
+    weights = model.coef_
+    print >> sys.stderr, "Weights:", str(weights)
+
   elif task == 4: 
     # Extra credit 
     (X, y) = extra_train_features(train_data_file, train_rel_file)
     model = extra_learning(X, y)    
+    # some debug output
+    weights = model.w
+    print >> sys.stderr, "Weights:", str(weights), "Biases:", str(model.b)
+
   else:
     (X, y) = pointwise_train_features(train_data_file, train_rel_file)
     model = pointwise_learning(X, y)
-  # some debug output
-  weights = model.coef_
-  print >> sys.stderr, "Weights:", str(weights)
 
   return model 
 
@@ -171,7 +184,6 @@ def test(test_data_file, model, task):
   
 
 if __name__ == '__main__':
-
   '''
   sys.stderr.write('# Input arguments: %s\n' % str(sys.argv))
   
@@ -186,8 +198,7 @@ if __name__ == '__main__':
   task = int(sys.argv[4])
   print >> sys.stderr, "### Running task", task, "..."
   '''
-  
-  task = 1
+  task = 4
   train_data_file = 'queryDocTrainData.train'
   train_rel_file = 'queryDocTrainRel.train'
   test_data_file = 'queryDocTrainData.dev'
