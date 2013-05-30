@@ -87,7 +87,7 @@ the learned weights are not reliable enough to make any importance judgements.
 \end{center}
 \end{table}
 
-\section{Task 2}
+\section*{Task 2}
 In this task, we train an SVM using a pairwise method.
 We use the same feature as in task 1, but we operate in the pairwise space.
 For any pairs of query-document vector features $\mathbf{x}_i, \mathbf{x}_j$, we compute the difference between them $\mathbf{x}_i - \mathbf{x}_j$ and label them using the relevance score between them.
@@ -108,12 +108,35 @@ your finding.
 
 The top result for two queries returned by Linear Regression and SVM respectively are shown in Table \ref{tab:rel}. As we see, SVM performs better than Linear regression in these two queries.
 
+Linear Regression tends to prefer documents with one or more of the
+query terms in the URL, whereas SVM identifies the information need better
+
+The weights in Table 3 suggest why this might be occurring. SVM weights the anchor much more
+heavily than any other field, thereby emphasizing other pages pointing at this page with a certain
+anchor text. This serves as a proxy for identifying information need. In fact, assigning a higher weight
+to the anchor text can be thought of as a substitute for PageRank. In contrast, Linear Regression
+places a high weight on the title of the page, which may not always be the best guide to the user’s
+information need.
+
+On studying the query results in depth, we notice a few things which suggest potential extra features
+for the next task:
+For similarly relevant URLs, shorter URLs are usually better (http://cs276.stanford.edu is
+better than http://www.stanford.edu/classes/cs276)
+• Static URLs are usually more relevant than dynamic URLs. Dynamic URLs tend to be longer
+and contain characters such as ’?’.
+• The earlier a query term occurs as part of a URL, the more relevant it’s likely to be (same
+example as above).
+In general, these observations reflect that given two documents which appear equally relevant, we
+notice that the user is looking for the more general document. This is perhaps because the general
+document is more likely to contain relevant links to other, more specific information. In the next
+section, we use these observations to create useful features.
+
+
 
 \begin{table}[h!]
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
   \hline
-
  method & query & top url returned by the method & relevance \\  \hline
 linear regression & ee master requirements &  http://ee.stanford.edu/  & 1.0 \\\hline
 SVM & ee master requirements  & http://ee.stanford.edu/admissions & 1.66 \\\hline
@@ -133,15 +156,14 @@ SVM & stanford cs track &  http://csmajor.stanford.edu/Requirements.shtml & 2.0 
   \hline
   Pointwise linear regression weights & $0.20$ & $0.59$ & $0.12$ & $1.45$ & $0.00$ & $0.8632$ \\
   \hline
-  Pairwise SVM weightes & 0.12  &  0.35 &  0.14 &  0.06 &  0.03 &  0.8688 \\
+  Pairwise SVM weightes & 0.12 & 0.35 &  0.14 &  0.06 &  0.03 &  0.8688 \\
   \hline
 \end{tabular}
 \caption{Weights obtained by two different approaches}\label{tab:wtt}
 \end{center}
 \end{table}
 
-
-\section{Task 3}
+\section*{Task 3}
 In this task, we try out the following features
 \begin{itemize}
   \item[] tf-idf scores of five different fields (the same setup as in task 1)
@@ -193,14 +215,15 @@ Report the best NDCG score achieved on the development test data.
 \textbf{TODO}
 
 
-\section{Extra Credit (PRank)}
+\section*{Extra Credit (PRank)}
 
-1. Report performance evaluated on the development set
+We use PRank to rank the document relevance. The relevance in training data is derived by averaging editor's opinions, and can be a fraction, and not an integer. 
+We approximate the relevance to the nearest integer by rounding before we need the relevence into PRank.  
 
 The NDCG score achieved by PRank algorithm on the development test data is $0.8468$, compared to $0.8632$ in task 1.
 
-2. Briefly discuss why one method is better than the other.
+PRank has not only 5 paramemters for weights, and it also has 4 threshold parameters $b$ while Linear regression has only 5 parameters. 
+Due to a lack of data, even though PRank has more expressibility models, it is also easier to be underfitted. That's why It has lower performance than the linear regression. 
 
-\textbf{TODO}
 \end{document}
 
