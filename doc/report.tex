@@ -1,0 +1,78 @@
+\input{suhw.tex}
+\usepackage{graphicx,amssymb,amsmath,enumerate}
+\usepackage{courier}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{fancyvrb}
+\usepackage{stmaryrd}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{language=Python,
+	frame=lines,
+   basicstyle=\ttfamily\fontsize{8}{12}\selectfont,
+   keywordstyle=\color{blue},
+   commentstyle=\color{red},
+   stringstyle=\color{dkgreen},
+   numbers=left,
+   numberstyle=\tiny\color{gray},
+   stepnumber=1,
+   numbersep=10pt,
+   backgroundcolor=\color{white},
+   tabsize=2,
+   showspaces=false,
+   showstringspaces=false,
+   lineskip=-3.5pt }
+\oddsidemargin 0in
+\evensidemargin 0in
+\textwidth 6.5in
+\topmargin -0.5in
+\textheight 9.0in
+
+\begin{document}
+
+\normaldoc{CS276: Information Retrieval and Web Search}{Spring 2013}{Programming Assignment 4}{Botao Hu (botaohu), Jiayuan Ma (jiayuanm)}{\today}
+
+\pagestyle{myheadings}  % Leave this command alone
+
+\section{Task 1}
+1. Report the NDCG performance achieved on the development test data.
+
+2. How does this score compared to the performance obtained using the weights manually set in PA3? Do the values of $w^∗$ make sense (e.g., should a field be weighed higher than another)? Report your finding.
+
+\section{Task 2}
+1. Report the
+NDCG performance achieved on the development test data.
+
+
+2. Compare your ranking outputs given by the linear regression and the ranking SVM.
+Find 2-3 queries in which results of one method are markedly different from those
+of the other and use your relevance score file to judge which one is better.2
+Then, for each of these queries, pick a URL and examine the train data file (or the
+page content) with reference to the weight vectors learned to find out why that
+URL is ranked higher/lower in one method and lower/higher in the other. Report
+your finding.
+
+
+
+\section{Task 3}
+1. From the list of features above, find out which combinations of features help boost
+performance. Report the NDCG scores achieved on the development test data
+for these combinations.
+
+2. Document your choices in the report
+
+3. 
+Examine your ranking output, list 1-2 types of errors that your system tends
+to make, and suggest features to fix them. Do they help fix the problems you
+observed? What about the NDCG scores achieved on the development test data?
+Report your finding.
+You could also propose new features that help improve performance. Report the
+best NDCG score achieved on the development test data.
+
+\section{Extra Credit}
+1. report performance evaluated on the development
+set
+
+\end{document}
+

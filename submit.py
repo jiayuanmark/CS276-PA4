@@ -128,7 +128,10 @@ def getChallenge(email, partId):
   req = urllib2.Request(url, data)
   response = urllib2.urlopen(req)
   text = response.read().strip()
-
+ 
+#  print text
+#  print values
+#  sys.exit(1)
   # text is of the form email|ch|signature
   splits = text.split('|')
   if(len(splits) != 9):
@@ -203,17 +206,20 @@ def validParts():
                'Task 4 (Extra Credit)']
   return partNames
 
+# Thang: factor code into a new function to run different tasks
+def run_task(task_id, test_file, test_output_length):
+  start = time()
+  child = Popen(['./l2r.sh', task_id, test_file], stdout=PIPE, stderr=PIPE, shell=False);
+  (res, err) = child.communicate("")
+  elapsed = time() - start
+  guesses = res.splitlines()
+  print err
+  if (len(guesses) != test_output_length):
+      print 'Warning. The number of url-document pairs ' + str(len(guesses)) + ' is not correct. Please ensure that the output is formatted properly.'
+  return (res, elapsed)
+
 def output(partId, ch_aux):
   """Uses the student code to compute the output for test cases."""
-  res = []
-  print '== Make sure queryDocTrainData.(train|dev) and queryDocTrainRel.(train|dev) are in the current working directory'
-  print '== Running your code ...'
-  print '== Your code should output results (and nothing else) to stdout'
-  test_file = NamedTemporaryFile(delete=False)
-  test_file.write(ch_aux)
-  test_file.close()
-  linesOutput = 1320
-
   if not os.path.exists("people.txt"):
       print "There is no people.txt file in this directory. Please make people.txt file in this directory with your and your partner's SUNet ID in separate lines (do NOT include @stanford.edu)"
       sys.exit(1)
@@ -229,53 +235,38 @@ def output(partId, ch_aux):
   peopleStr = "_".join(str(x.strip()) for x in people  if x)
  
   elapsed= 0.0 
+  dev_elapsed = 0.0
+  results = []
+  dev_results = []
   if partId == 0:
     print 'Submitting the report'
-  elif partId == 1:
-    print 'Calling ./l2r.sh for Task 1 (this might take a while)'
-    start = time()
-    child = Popen(['./l2r.sh', '1', test_file.name], stdout=PIPE, stderr=PIPE, shell=False);
-    (res, err) = child.communicate("")
-    elapsed = time() - start
-    guesses = res.splitlines()
-    if (len(guesses) != linesOutput):
-        print 'Warning. The number of url-document pairs ' + str(len(guesses)) + ' is not correct. Please ensure that the output is formatted properly.'
-  elif partId == 2:
-      print 'Calling ./l2r.sh for Task 2 (this might take a while)'
-      start = time()
-      child = Popen(['./l2r.sh', '2', test_file.name], stdout=PIPE, stderr=PIPE, shell=False)
-      (res, err) = child.communicate("")
-      elapsed = time() - start
-      guesses = res.splitlines()
-      print err
-      if (len(guesses) != linesOutput):
-          print 'Warning. The number of url-document pairs is not correct. Please ensure that the output is formatted properly.'
-  elif partId == 3:
-      print 'Calling ./l2r.sh for Task 3 (this might take a while)'
-      start = time()
-      child = Popen(['./l2r.sh', '3', test_file.name], stdout=PIPE, stderr=PIPE, shell=False)
-      (res, err) = child.communicate("")
-      elapsed = time() - start
-      guesses = res.splitlines()
-      print err
-      if (len(guesses) != linesOutput):
-          print 'Warning. The number of url-document pairs is not correct. Please ensure that the output is formatted properly.'
-  elif partId == 4:
-      print 'Calling ./l2r.sh for Task 4 (this might take a while)'
-      start = time()
-      child = Popen(['./l2r.sh', '4', test_file.name], stdout=PIPE, stderr=PIPE, shell=False)
-      (res, err) = child.communicate("")
-      elapsed = time() - start
-      guesses = res.splitlines()
-      print err
-      if (len(guesses) != linesOutput):
-        print 'Warning. The number of url-document pairs is no://piazza.com/class#spring2013/cs276/501t correct. Please ensure that the output is formatted properly.'
+  elif partId <= 4 and partId>0:
+    print '== Make sure queryDocTrainData.(train|dev) and queryDocTrainRel.(train|dev) are in the current working directory'
+    print '== Running your code ...'
+    print '== Your code should output results (and nothing else) to stdout'
+
+    print '## Calling ./l2r.sh for Task', str(partId), '(this might take a while)'
+    
+    # dev
+    dev_file = 'queryDocTrainData.dev'
+    print '# Running on development test data ...'
+    dev_output_length = 1234
+    (dev_results, dev_elapsed) = run_task(str(partId), dev_file, dev_output_length)
+
+    # test
+    print '# Running on test data ...'
+    test_file = NamedTemporaryFile(delete=False)
+    test_file.write(ch_aux)
+    test_file.close()
+    test_file = test_file.name
+    test_output_length = 1320
+    (results, elapsed) = run_task(str(partId), test_file, test_output_length)
   else:
     print '[WARNING]\t[output]\tunknown partId: %s' % partId
     sys.exit(1)
   print '== Finished running your code'
   
-  return json.dumps( { 'result': res, 'time': elapsed, 'timesubmitted': str(datetime.datetime.now()), 'USERIDS': peopleStr } )
+  return json.dumps( { 'dev_result': dev_results, 'dev_time': dev_elapsed, 'result': results, 'time': elapsed, 'timesubmitted': str(datetime.datetime.now()), 'USERIDS': peopleStr } )
 
 def test_python_version():
   """docstring for test_python_version"""
