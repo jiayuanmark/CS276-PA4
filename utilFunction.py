@@ -375,7 +375,7 @@ def build_rich_features(queries, documents):
       '''
       # page rank
       feat.append(documents[query][x]['pagerank'])
-      
+      '''
       # title index
       feat.append(compute_mini_index(qitem, title.split()))
 
@@ -393,7 +393,7 @@ def build_rich_features(queries, documents):
         feat.append( min([ compute_mini_index(qitem, u.split()) for u in documents[query][x]['header'] ]) )
       else:
         feat.append(sys.maxint)
-      '''
+      
       # anchor index
       if 'anchors' in documents[query][x]:
         feat.append( min([ compute_mini_index(qitem, key.split()) for key in documents[query][x]['anchors'] ]) )
@@ -431,8 +431,7 @@ def build_indexmap(qryDocList):
     if qry not in index_map:
       queries.append(qry)
       index_map[qry] = {}
-    else:
-      index_map[qry][url] = i
+    index_map[qry][url] = i
   return queries, index_map
 
 
