@@ -7,7 +7,7 @@ class PRank:
     pass
 
   def fit(self, X, Y):
-    self.rel = [-1.0, 0.0, 1.0, 2.0, 3.0]
+    self.rel = [-1,0,1,2,3]
     self.w = [0.0] * len(X[1])
     self.k = len(self.rel)
     k = self.k
