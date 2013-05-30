@@ -102,17 +102,36 @@ We build features, calculate the differences between features vectors, and feed 
 performance. Report the NDCG scores achieved on the development test data
 for these combinations.
 
-The best NDCG score achieved on the development test data is $0.8829$.
-We use all the above features except the smallest window feature for body fields.
-Since query terms may dispersed within the bodies of documents, smallest windows in bodies are usually quite large and uninformative. Therefore, it is reasonable to exclude this feature from our feature set.  
+The best NDCG score achieved on the development test data is $0.8871$.
+We use all the above features except the smallest window feature for anchor fields.
+Since anchor fields are short, smallest windows in bodies are usually quite large and uninformative. Therefore, it is reasonable to exclude this feature from our feature set.
 
-2.
-Examine your ranking output, list 1-2 types of errors that your system tends
+By dropping one feature at a time, we experiments with different combinations of features to see the contributions of different features.
+\begin{table}
+\begin{center}
+\begin{tabular}{|l|l|}
+  \hline
+  Leaving out feature & NDCG score \\
+  Binary ''.pdf'' feature & $0.8868$ \\
+  BM25F score & $0.8829$ \\
+  Title window & $0.8849$ \\
+  URL window & $0.8841$ \\
+  Body window & $0.8829$ \\
+  Header window & $0.8858$ \\
+  Anchor window & $\mathbf{0.8871}$ \\
+  Page Rank & $0.8822$ \\
+  \hline
+\end{tabular}
+\caption{NDCG scores with different feature combinations}\label{tab:perform}
+\end{center}
+\end{table}
+
+
+2. Examine your ranking output, list 1-2 types of errors that your system tends
 to make, and suggest features to fix them. Do they help fix the problems you
 observed? What about the NDCG scores achieved on the development test data?
-Report your finding.
-You could also propose new features that help improve performance. Report the
-best NDCG score achieved on the development test data.
+Report your finding. You could also propose new features that help improve performance.
+Report the best NDCG score achieved on the development test data.
 
 \textbf{TODO}
 

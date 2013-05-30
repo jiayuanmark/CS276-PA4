@@ -331,39 +331,36 @@ def build_rich_features(queries, documents):
       else:
         feat.append(0)
       
-
       # BM25F
       feat.append(BM25F_score(qvec, term_vec, fld_len, avglen))
-      
+
       # title window
       feat.append(compute_window(qitem, title.split()))
-         
+      
       # url window
       feat.append(compute_window(qitem, url.split()))
       
       # body window
-      '''
       if 'body_hits' in documents[query][x]:
         feat.append(compute_body_window(qitem, documents[query][x]['body_hits']))
       else:
         feat.append(sys.maxint)
-      '''
-
+      
       # header window
       header_win = [sys.maxint]
       if 'header' in documents[query][x]:
         header_win.extend([ compute_window(qitem, u.split()) for u in documents[query][x]['header'] ])
       feat.append( min(header_win) )
-      
+      '''
       # anchor window
       anchor_win = [sys.maxint]
       if 'anchors' in documents[query][x]:
         anchor_win.extend([ compute_window(qitem, key.split()) for key in documents[query][x]['anchors'] ])
       feat.append( min(anchor_win) )
-      
+      '''
       # page rank
       feat.append(documents[query][x]['pagerank'])
-
+      
       features.append(feat)
       qryDocList.append((query, x))
   return (features, qryDocList)
