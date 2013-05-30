@@ -106,7 +106,6 @@ def build_features(queries, documents):
     # Query item and query vector
     qitem = list(set(query.split()))
     qvec = sublinear_scale(vector_from_text(qitem, query))
-    #qvec = vector_from_text(qitem, query)
     idf = document_frequency(qitem, table)
     qvec = vector_product(qvec, idf)
         
@@ -198,7 +197,7 @@ def BM25F_score(qvec, term_vec, fld_len, avg_len):
 
 def compute_window(qitem, text):
   if not set(text).issuperset(set(qitem)):
-    return 999999999
+    return sys.maxint
   if len(qitem) == 1:
     return 1
   index = [text.index(u) for u in qitem]
@@ -212,12 +211,9 @@ def compute_window(qitem, text):
   return win
 
 
-'''
-BUG fix later
-'''
 def compute_body_window(qitem, body):
   if not set(body.keys()).issuperset(set(qitem)):
-    return 999999999
+    return sys.maxint
   if len(qitem) == 1:
     return 1
   lst = []
@@ -225,23 +221,27 @@ def compute_body_window(qitem, body):
     for idx in body[qitem[id]]:
       lst.append((idx, id))
   lst = sorted(lst, key=lambda x: x[0], reverse=False)
-  
-  win = 999999999
+
+  win = sys.maxint
   count = [0] * len(qitem)
-  s, e, zeros = 0, 0, len(qitem)
-  while e < len(lst):
+  left, right, zeros = 0, 0, len(qitem)
+  count[lst[left][1]] += 1
+  zeros -= 1
+  while right < len(lst):
     if zeros != 0:
-      if count[lst[e][1]] == 0:
+      right += 1
+      if right == len(lst):
+        break
+      if count[lst[right][1]] == 0:
         zeros -= 1
-      count[lst[e][1]] += 1
-      e += 1
+      count[lst[right][1]] += 1
     else:
-      if lst[e][0] - lst[s][0] + 1 < win:
-        win = lst[e][0] - lst[s][0] + 1
-      count[lst[s][1]] -= 1
-      if count[lst[s][1]] == 0:
+      if lst[right][0] - lst[left][0] + 1 < win:
+        win = lst[right][0] - lst[left][0] + 1
+      count[lst[left][1]] -= 1
+      if count[lst[left][1]] == 0:
         zeros += 1
-      s += 1
+      left += 1
   return win
 
 
@@ -253,8 +253,8 @@ def build_rich_features(queries, documents):
   for query in queries.keys():
     # Query item and query vector
     qitem = list(set(query.split()))
-    #qvec = sublinear_scale(vector_from_text(qitem, query))
-    qvec = vector_from_text(qitem, query)
+    qvec = sublinear_scale(vector_from_text(qitem, query))
+    #qvec = vector_from_text(qitem, query)
     idf = document_frequency(qitem, table)
     qvec = vector_product(qvec, idf)
         
@@ -267,14 +267,12 @@ def build_rich_features(queries, documents):
       # title
       title = documents[query][x]['title']
       title_vec = vector_from_text(qitem, title)
-      feat.append(vector_dot_product(qvec, title_vec))
       term_vec['title'] = title_vec
       fld_len['title'] = len(title.split())
       
       # url
       url = re.sub(r'\W+', ' ', x)
       url_vec = vector_from_text(qitem, url)
-      feat.append(vector_dot_product(qvec, url_vec))
       term_vec['url'] = url_vec
       fld_len['url'] = len(url.split())
 
@@ -285,7 +283,6 @@ def build_rich_features(queries, documents):
         for header in documents[query][x]['header']:
           header_vec = vector_sum(header_vec, vector_from_text(qitem, header))
           header_len = header_len + len(header.split())
-      feat.append(vector_dot_product(qvec, header_vec))
       term_vec['header'] = header_vec
       fld_len['header'] = header_len
 
@@ -294,7 +291,6 @@ def build_rich_features(queries, documents):
       if 'body_hits' in documents[query][x]:
         body = documents[query][x]['body_hits']
         body_vec = [len(body.setdefault(item, [])) for item in qitem]
-      feat.append(vector_dot_product(qvec, body_vec))
       term_vec['body'] = body_vec
       fld_len['body'] = int(documents[query][x]['body_length']) + 500
 
@@ -306,49 +302,53 @@ def build_rich_features(queries, documents):
         for key in anchor:
           anchor_vec = vector_sum(anchor_vec, [anchor[key] * u for u in vector_from_text(qitem, key)])
           anchor_len = anchor_len + len(key.split()) * anchor[key]
-      feat.append(vector_dot_product(qvec, anchor_vec))
       term_vec['anchor'] = anchor_vec
       fld_len['anchor'] = anchor_len
 
-      # length normalization
-      norm = int(documents[query][x]['body_length']) + 500
-      feat = [float(u) / float(norm) for u in feat]
+      # length normalization using field length
+      for key in term_vec:
+        val = vector_dot_product(qvec, term_vec[key])
+        if val != 0:
+          val /= fld_len[key]
+        feat.append(val)
+
 
       # url ends in PDF
       if x.endswith('.pdf'):
         feat.append(1)
       else:
         feat.append(0)
+      
 
       # BM25F
       feat.append(BM25F_score(qvec, term_vec, fld_len, avglen))
-
+      
       # title window
       feat.append(compute_window(qitem, title.split()))
-      
+         
       # url window
       feat.append(compute_window(qitem, url.split()))
-
+      
       # body window
       '''
       if 'body_hits' in documents[query][x]:
         feat.append(compute_body_window(qitem, documents[query][x]['body_hits']))
       else:
-        feat.append(999999999)
+        feat.append(sys.maxint)
       '''
 
       # header window
-      header_win = [999999999]
+      header_win = [sys.maxint]
       if 'header' in documents[query][x]:
         header_win.extend([ compute_window(qitem, u.split()) for u in documents[query][x]['header'] ])
       feat.append( min(header_win) )
       
       # anchor window
-      anchor_win = [999999999]
+      anchor_win = [sys.maxint]
       if 'anchors' in documents[query][x]:
         anchor_win.extend([ compute_window(qitem, key.split()) for key in documents[query][x]['anchors'] ])
       feat.append( min(anchor_win) )
-
+      
       # page rank
       feat.append(documents[query][x]['pagerank'])
 
