@@ -184,7 +184,6 @@ def test(test_data_file, model, task):
   
 
 if __name__ == '__main__':
-  
   sys.stderr.write('# Input arguments: %s\n' % str(sys.argv))
   
   if len(sys.argv) != 5:
@@ -197,8 +196,8 @@ if __name__ == '__main__':
   test_data_file = sys.argv[3]
   task = int(sys.argv[4])
   print >> sys.stderr, "### Running task", task, "..."
-  '''
-  task = 4
+  
+  '''task = 1
   train_data_file = 'queryDocTrainData.train'
   train_rel_file = 'queryDocTrainRel.train'
   test_data_file = 'queryDocTrainData.dev'
