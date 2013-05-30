@@ -38,18 +38,18 @@
 \section{Task 1}
 For this task, we use sublinear scaling and inverse document frequency when constructing query vectors.
 For document vectors, we use term frequency (without any scaling) and length normalization.
-For length normalization, we naively divide all fields by the same normalization factor, which is
-body length adding a smooth constant $500$.
+For length normalization, we divide all fields by their own field lengths.
+We use tf-idf scores for each field (title, url, body, header, anchor) as features.
 
 1. Report the NDCG performance achieved on the development test data. How does this score compared to the performance obtained using the weights manually set in PA3?
 
-The NDCG performance on the development test data is $0.8494$, compared to the NDCG score $0.8662$ achieved in PA3.
+The NDCG performance on the development test data is $0.8632$, compared to the NDCG score $0.8662$ achieved in PA3.
 
 2. Do the values of $w^*$ make sense (e.g., should a field be weighed higher than another)? Report your finding.
 
 The weights learned in this task and manually tuned in PA3 are compared in Table \ref{tab:wt}.
-As we can see from Table \ref{tab:wt}, there are some similarities between them (i.e. both put low weights on body fields).
-According to the weights produced by linear regression, title field is the most important feature. On the other hand,
+As we can see from Table \ref{tab:wt}, there are not any significant similarities between them.
+According to the weights produced by linear regression, body field is the most important feature. On the other hand,
 anchor field is the least important feature, which is questionable. Since linear regression is not robust with outliers,
 the learned weights are not reliable enough to make any importance judgements.
 \begin{table}
@@ -58,7 +58,7 @@ the learned weights are not reliable enough to make any importance judgements.
   \hline
   Weight $w^*$ & $w_\textrm{title}$ & $w_\textrm{url}$ & $w_\textrm{header}$ & $w_\textrm{body}$ & $w_\textrm{anchor}$ \\
   \hline
-  Pointwise linear regression weights & $44.6$ & $19.6$ & $16.0$ & $2.2$ & $0.4$ \\
+  Pointwise linear regression weights & $0.2$ & $0.5$ & $0.1$ & $1.5$ & $0.0$ \\
   \hline
   Weights manually tuned in PA3 & $1.0$ & $0.1$ & $0.5$ & $0.3$ & $2.0$ \\
   \hline
@@ -70,10 +70,11 @@ the learned weights are not reliable enough to make any importance judgements.
 
 \section{Task 2}
 In this task we use the same feature as in task 1, but we operate in the pairwise space.
+For any pairs of query-document vector features $\mathbf{x}_i, \mathbf{x}_j$, we compute the difference between them $\mathbf{x}_i - \mathbf{x}_j$ and label them using the relevance score between them. 
 
 1. Report the NDCG performance achieved on the development test data.
 
-The NDCG score on the development test data is $0.8627$.
+The NDCG score on the development test data is $0.8688$.
 
 
 2. Compare your ranking outputs given by the linear regression and the ranking SVM.
@@ -84,20 +85,28 @@ page content) with reference to the weight vectors learned to find out why that
 URL is ranked higher/lower in one method and lower/higher in the other. Report
 your finding.
 
-
+\textbf{TODO}
 
 \section{Task 3}
-In this task, we use 
+In this task, we try out the following features
+\begin{itemize}
+  \item[] tf-idf scores of five different fields (the same setup as in task 1)
+  \item[] binary feature indicating if a URL ends in ``.pdf''
+  \item[] BM25F value derived with manually tuned weights in PA3 (without the PageRank term)
+  \item[] Smallest window features of five different fields
+  \item[] PageRank score of each document
+\end{itemize}
+We build features, calculate the differences between features vectors, and feed these pairwise features into SVM.
 
 1. From the list of features above, find out which combinations of features help boost
 performance. Report the NDCG scores achieved on the development test data
 for these combinations.
 
-The NDCG score achieved on the development test data is $0.8829$.
+The best NDCG score achieved on the development test data is $0.8829$.
+We use all the above features except the smallest window feature for body fields.
+Since query terms may dispersed within the bodies of documents, smallest windows in bodies are usually quite large and uninformative. Therefore, it is reasonable to exclude this feature from our feature set.  
 
-2. Document your choices in the report
-
-3.
+2.
 Examine your ranking output, list 1-2 types of errors that your system tends
 to make, and suggest features to fix them. Do they help fix the problems you
 observed? What about the NDCG scores achieved on the development test data?
@@ -105,9 +114,17 @@ Report your finding.
 You could also propose new features that help improve performance. Report the
 best NDCG score achieved on the development test data.
 
-\section{Extra Credit}
-1. report performance evaluated on the development
-set
+\textbf{TODO}
 
+
+\section{Extra Credit (PRank)}
+
+1. Report performance evaluated on the development set
+
+The NDCG score achieved by PRank algorithm on the development test data is $0.8468$, compared to $0.8632$ in task 1.
+
+2. Briefly discuss why one method is better than the other.
+
+\textbf{TODO}
 \end{document}
 

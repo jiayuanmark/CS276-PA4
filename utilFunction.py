@@ -143,7 +143,7 @@ def build_features(queries, documents):
         feat.append(vector_dot_product(qvec, body_vec))
       else:
         feat.append(0)
-      fld_len.append(int(documents[query][x]['body_length']) + 500)
+      fld_len.append(int(documents[query][x]['body_length'])+500)
 
       # achors
       val = 0
@@ -162,7 +162,6 @@ def build_features(queries, documents):
       for i in range(len(feat)):
         if feat[i] != 0:
           feat[i] /= fld_len[i]
-
 
       features.append(feat)
       qryDocList.append((query, x))
