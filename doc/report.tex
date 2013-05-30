@@ -35,49 +35,70 @@
 
 \pagestyle{myheadings}  % Leave this command alone
 
-\section{Task 1}
-For this task, we use sublinear scaling and inverse document frequency when constructing query vectors.
-For document vectors, we use term frequency (without any scaling) and length normalization.
-For length normalization, we divide all fields by their own field lengths.
-We use tf-idf scores for each field (title, url, body, header, anchor) as features.
+\section*{Introduction}
+In this assignment, we adopted linear regression and support vector machine and tried different features, to predict relevance and rank query results. 
 
-1. Report the NDCG performance achieved on the development test data. How does this score compared to the performance obtained using the weights manually set in PA3?
+Table \ref{tab:all} provides an overall NCDG results we have obtained for different tasks. In the rest of this document,
+we will describe our methodology and findings.
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{|c|c|c|}
+  \hline
+  Task & Method & Test NDCG \\\hline
+  1 &  Linear Regression (Pointwise) & 0.8632 \\\hline
+  2 & SVM (Pairwise)  & 0.8688 \\\hline
+  3 & SVM with rich features (Pairwise)  & 0.8871 \\ \hline
+  Extra & PRank & 0.8468   \\\hline
+\end{tabular}
+\caption{Summary of results}\label{tab:all}
+\end{center}
+\end{table}
 
-The NDCG performance on the development test data is $0.8632$, compared to the NDCG score $0.8662$ achieved in PA3.
+\section*{Task 1}
+In this task, we train a linear regression model using a pointwise method. 
+As we did in PA3, we represent each query-page pair as a vector of five features. 
 
-2. Do the values of $w^*$ make sense (e.g., should a field be weighed higher than another)? Report your finding.
+\begin{itemize}
+\item We use sublinear scaling and inverse document frequency when constructing query vectors.
+\item For document vectors, we use term frequency (without any scaling) and length normalization.
+\item For length normalization, we divide all fields by their own field lengths. 
+\item We use tf-idf scores for each field (title, url, body, header, anchor) as features.
+\end{itemize}
 
 The weights learned in this task and manually tuned in PA3 are compared in Table \ref{tab:wt}.
-As we can see from Table \ref{tab:wt}, there are not any significant similarities between them.
+The NDCG performance on the development test data is $0.8632$, compared to the NDCG score $0.8662$ achieved in PA3.
+As we can see from Table \ref{tab:wt}, there are not any significant similarities between them. 
 According to the weights produced by linear regression, body field is the most important feature. On the other hand,
 anchor field is the least important feature, which is questionable. Since linear regression is not robust with outliers,
 the learned weights are not reliable enough to make any importance judgements.
-\begin{table}
+
+\begin{table}[h!]
 \begin{center}
-\begin{tabular}{|c|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|c|c|}
   \hline
-  Weight $w^*$ & $w_\textrm{title}$ & $w_\textrm{url}$ & $w_\textrm{header}$ & $w_\textrm{body}$ & $w_\textrm{anchor}$ \\
+  Method & $w_\textrm{title}$ & $w_\textrm{url}$ & $w_\textrm{header}$ & $w_\textrm{body}$ & $w_\textrm{anchor}$ & NDCG \\
   \hline
-  Pointwise linear regression weights & $0.2$ & $0.5$ & $0.1$ & $1.5$ & $0.0$ \\
+  Pointwise linear regression weights & $0.20$ & $0.59$ & $0.12$ & $1.45$ & $0.00$ & $0.8632$ \\
   \hline
-  Weights manually tuned in PA3 & $1.0$ & $0.1$ & $0.5$ & $0.3$ & $2.0$ \\
-  \hline
+  Weights manually tuned in PA3 & $1.0$ & $0.1$ & $0.5$ & $0.3$ & $2.0$ & 0.8662 \\
+  \hline 
 \end{tabular}
 \caption{Weights obtained by two different approaches}\label{tab:wt}
 \end{center}
 \end{table}
 
-
 \section{Task 2}
-In this task we use the same feature as in task 1, but we operate in the pairwise space.
+In this task, we train an SVM using a pairwise method. 
+We use the same feature as in task 1, but we operate in the pairwise space.
 For any pairs of query-document vector features $\mathbf{x}_i, \mathbf{x}_j$, we compute the difference between them $\mathbf{x}_i - \mathbf{x}_j$ and label them using the relevance score between them. 
 
-1. Report the NDCG performance achieved on the development test data.
+Because SVMs are not robust to high diversity in values of feature, 
+we do standardization on the features. 
 
 The NDCG score on the development test data is $0.8688$.
 
 
-2. Compare your ranking outputs given by the linear regression and the ranking SVM.
+Compare your ranking outputs given by the linear regression and the ranking SVM.
 Find 2-3 queries in which results of one method are markedly different from those
 of the other and use your relevance score file to judge which one is better.
 Then, for each of these queries, pick a URL and examine the train data file (or the
@@ -85,7 +106,40 @@ page content) with reference to the weight vectors learned to find out why that
 URL is ranked higher/lower in one method and lower/higher in the other. Report
 your finding.
 
-\textbf{TODO}
+The top result for two queries returned by Linear Regression and SVM respectively are shown in Table \ref{tab:rel}. As we see, SVM performs better than Linear regression in these two queries. 
+
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+  \hline
+
+ method & query & top url returned by the method & relevance \\  \hline
+linear regression & ee master requirements &  http://ee.stanford.edu/  & 1.0 \\\hline
+SVM & ee master requirements  & http://ee.stanford.edu/admissions & 1.66 \\\hline
+linear regression & stanford cs track &  http://csmajor.stanford.edu/Considering.shtml &
+1.66 \\\hline
+SVM & stanford cs track &  http://csmajor.stanford.edu/Requirements.shtml & 2.0 \\\hline
+\end{tabular}
+\caption{Results of linear regression are markedly different from SVM}\label{tab:rel}
+\end{center}
+\end{table}
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+  \hline
+  Method & $w_\textrm{title}$ & $w_\textrm{url}$ & $w_\textrm{header}$ & $w_\textrm{body}$ & $w_\textrm{anchor}$ & NDCG \\
+  \hline
+  Pointwise linear regression weights & $0.20$ & $0.59$ & $0.12$ & $1.45$ & $0.00$ & $0.8632$ \\
+  \hline 
+  Pairwise SVM weightes & 0.12  &  0.35 &  0.14 &  0.06 &  0.03 &  0.8688 \\
+  \hline
+\end{tabular}
+\caption{Weights obtained by two different approaches}\label{tab:wtt}
+\end{center}
+\end{table}
+
 
 \section{Task 3}
 In this task, we try out the following features
