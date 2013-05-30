@@ -98,8 +98,8 @@ query: mscs stanford
 query: cs276 stanford
   url: http://cs276.stanford.edu/
   url: http://www.stanford.edu/class/cs276/cs276-2012-syllabus.html
-  url: http://scpd.stanford.edu/search/publicCourseSearchDetails.do?method=load&courseId=11807
   url: http://www.stanford.edu/class/cs276/handouts/
+  url: http://scpd.stanford.edu/search/publicCourseSearchDetails.do?method=load&courseId=11807
   url: http://www.stanford.edu/class/cs276/courseinfo.html
   url: https://mailman.stanford.edu/mailman/listinfo/cs276-spr1213-guests
   url: http://myvideos.stanford.edu/player/slplayer.aspx?course=CS276&p=true
@@ -108,8 +108,8 @@ query: cs276 stanford
 query: stanford scpd mscs
   url: http://scpd.stanford.edu/
   url: http://mscs.stanford.edu/classes/index.php.backup
-  url: http://cs.stanford.edu/degrees/mscs/faq/
   url: http://scpd.stanford.edu/design/
+  url: http://cs.stanford.edu/degrees/mscs/faq/
   url: http://scpd.stanford.edu/generalInformation/pdf/HCPHandbook.pdf
   url: http://scpd.stanford.edu/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=1240861
   url: http://scpd.stanford.edu/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=1060516
@@ -128,8 +128,8 @@ query: stanford explorecourses
 query: engr 40
   url: https://explorecourses.stanford.edu/search?view=catalog&filter-coursestatus-Active=on&page=0&q=ENGR40
   url: http://explorecourses.stanford.edu/CourseSearch/search?page=0&catalog&q=ENGR&filter-catalognumber-ENGR=on&view=catalog
-  url: https://explorecourses.stanford.edu/search?view=catalog&filter-coursestatus-Active=on&page=0&catalog=&q=ENGR+40%3A+Introductory+Electronics&collapse=
   url: http://explorecourses.stanford.edu/search?view=catalog&filter-coursestatus-Active=on&page=0&catalog=&q=ENGR+40A%3A+Introductory+Electronics&collapse=
+  url: https://explorecourses.stanford.edu/search?view=catalog&filter-coursestatus-Active=on&page=0&catalog=&q=ENGR+40%3A+Introductory+Electronics&collapse=
   url: http://explorecourses.stanford.edu/CourseSearch/search?view=catalog&filter-coursestatus-Active=on&page=0&catalog=&q=ENGR+40N%3A+Engineering+Wireless+Networks&collapse=
   url: http://www.stanford.edu/group/ughb/cgi-bin/handbook/
   url: http://eeclass.stanford.edu/e40/
@@ -178,8 +178,8 @@ query: nvidia auditorium
   url: https://energy.stanford.edu/events/past
   url: http://www.stanford.edu/dept/soe/downloads/huang_self_guided_tour.pdf
   url: https://energy.stanford.edu/sites/default/files/ChinaPoster_4print_noCrop.pdf
-  url: http://maps.stanford.edu/ada/building-ada.cfm?FACIL_ID=04-080
   url: http://asia.stanford.edu/?page_id=3252
+  url: http://maps.stanford.edu/ada/building-ada.cfm?FACIL_ID=04-080
   url: http://etl.stanford.edu/
 query: stanford ldm
   url: http://ldm.stanford.edu/
@@ -234,13 +234,13 @@ query: ughb
 query: cs requirements
   url: http://cs.stanford.edu/content/phd-requirements
   url: http://cs.stanford.edu/admissions/application-requirements
-  url: http://cs.stanford.edu/degrees/mscs/classes/planning/
   url: http://cs.stanford.edu/degrees/undergrad/
-  url: http://cs.stanford.edu/education/admissions
+  url: http://cs.stanford.edu/degrees/mscs/classes/planning/
   url: http://cs.stanford.edu/degrees/mscs/degree.php
+  url: http://cs.stanford.edu/education/admissions
   url: http://csmajor.stanford.edu/Considering.shtml
-  url: http://cs.stanford.edu/content/clearing-breadth-requirements
   url: http://csmajor.stanford.edu/Requirements.shtml
+  url: http://cs.stanford.edu/content/clearing-breadth-requirements
 query: cs224w
   url: http://cs224w.stanford.edu/
   url: http://scpd.stanford.edu/search/publicCourseSearchDetails.do?method=load&courseId=7932016
@@ -337,8 +337,8 @@ query: class schedule
   url: http://hip.stanford.edu/classes/current.html
   url: https://healthimprovement.stanford.edu/classes/register/
   url: https://ed.stanford.edu/academics/courses
-  url: http://www.law.stanford.edu/node/149650/
   url: https://ed.stanford.edu/academics/courses/offerings
+  url: http://www.law.stanford.edu/node/149650/
   url: http://www.law.stanford.edu/organizations/offices/office-of-the-registrar/stanford-law-class-schedule-grids
   url: http://www.law.stanford.edu/organizations/offices/office-of-the-registrar/registration-and-selection-of-classes-for-stanford-law-students
 query: math 110 mcnamara
@@ -373,8 +373,8 @@ query: icenter stanford
   url: http://icenter.stanford.edu/quick_reference/passport_photos.html
 query: ir book
   url: http://nlp.stanford.edu/IR-book/
-  url: http://nlp.stanford.edu/IR-book/information-retrieval.html
   url: http://nlp.stanford.edu/IR-book/pdf/19web.pdf
+  url: http://nlp.stanford.edu/IR-book/information-retrieval.html
   url: http://nlp.stanford.edu/IR-book/newslides.html
   url: http://nlp.stanford.edu/IR-book/html/htmledition/irbook.html
   url: http://nlp.stanford.edu/IR-book/pdf/01bool.pdf
@@ -414,8 +414,8 @@ query: stanford robotics club
 query: stanford law
   url: http://www.law.stanford.edu/
   url: http://www.law.stanford.edu/contact/
-  url: http://www.law.stanford.edu/clinics
   url: http://www.law.stanford.edu/campus
+  url: http://www.law.stanford.edu/clinics
   url: http://www.law.stanford.edu/news/
   url: http://www.law.stanford.edu/prospective/
   url: http://www.law.stanford.edu/calendar/
@@ -509,8 +509,8 @@ query: meyer library
   url: http://acomp.stanford.edu/meyer/equipment_checkout
   url: http://acomp.stanford.edu/meyer/posters
   url: http://library.stanford.edu/libraries/meyer/about
-  url: http://library.stanford.edu/news/2012/11/meyer-library-demolition
   url: http://www-sul.stanford.edu/depts/meyer/
+  url: http://library.stanford.edu/news/2012/11/meyer-library-demolition
   url: http://library.stanford.edu/hours
   url: http://speaking.stanford.edu/Back_Issues/SOC71/computing/Wide_Format_Printing.html
 query: bosp
@@ -548,11 +548,11 @@ query: web search class stanford
   url: http://www.stanford.edu/class/msande239/
   url: http://scpd.stanford.edu/search/publicCourseSearchDetails.do?method=load&courseId=11807
   url: http://explorecourses.stanford.edu/
-  url: https://axess.stanford.edu/
   url: http://nlp.stanford.edu/IR-book/
+  url: https://axess.stanford.edu/
   url: http://cs276.stanford.edu/
-  url: http://online.stanford.edu/courses
   url: http://infolab.stanford.edu/~sergey/349/
+  url: http://online.stanford.edu/courses
 query: best sushi
   url: http://aagsa.stanford.edu/event/spring-mixer-sushi-games
   url: http://suif.stanford.edu/mediawiki/index.php/Virginia_Beach_Sushi
@@ -564,8 +564,8 @@ query: best sushi
   url: http://med.stanford.edu/student_life/eating.html
   url: http://www.stanford.edu/~jmorley/food.shtml
 query: afs token stanford
-  url: http://www.slac.stanford.edu/comp/unix/afs/users-guide/afs-frames.htm
   url: http://kipac.stanford.edu/collab/computing/intro/docs/afs
+  url: http://www.slac.stanford.edu/comp/unix/afs/users-guide/afs-frames.htm
   url: https://www.stanford.edu/group/farmshare/cgi-bin/wiki/index.php/AFS
   url: https://itservices.stanford.edu/service/afs/learningmore/tokens
   url: http://itservices.stanford.edu/service/afs/sysadmin/userguide/tokens
@@ -590,21 +590,21 @@ query: stanford certificate professional
 query: stanford events
   url: http://events.stanford.edu/
   url: http://music.stanford.edu/Events/calendar.html
+  url: http://gsc.stanford.edu/
   url: http://live.stanford.edu/month_list.php?filter=publ
   url: http://live.stanford.edu/month_list.php
-  url: http://gsc.stanford.edu/
   url: http://live.stanford.edu/month_list.php?filter=main
   url: http://events.stanford.edu/byCategory/1/
-  url: http://fsi.stanford.edu/events/
   url: http://events.stanford.edu/today/
+  url: http://fsi.stanford.edu/events/
 query: cs143
   url: http://www.stanford.edu/class/archive/cs/cs143/cs143.1128/
   url: http://scpd.stanford.edu/search/publicCourseSearchDetails.do?method=load&courseId=11721
   url: http://www.stanford.edu/class/cs143/
   url: https://mailman.stanford.edu/mailman/listinfo/cs143-sum1011-guests
   url: http://www.stanford.edu/class/archive/cs/cs143/cs143.1112/materials/lectures/lecture01.pdf
-  url: http://www.stanford.edu/class/archive/cs/cs143/cs143.1112/materials/lectures/lecture02.pdf
   url: https://explorecourses.stanford.edu/CourseSearch/search?view=catalog&filter-coursestatus-Active=on&page=0&q=CS143
+  url: http://www.stanford.edu/class/archive/cs/cs143/cs143.1112/materials/lectures/lecture02.pdf
   url: http://myvideos.stanford.edu/player/slplayer.aspx?course=CS143&p=true
   url: https://explorecourses.stanford.edu/search?view=catalog&filter-coursestatus-Active=on&page=0&catalog=&q=CS+143%3A+Compilers&collapse=
 query: stanford ir
@@ -669,11 +669,11 @@ query: stanford vaden pharmacy hours
   url: http://vaden.stanford.edu/medical/emergency_contraception.html
 query: finals schedule
   url: http://studentaffairs.stanford.edu/registrar/final-exams
-  url: http://www.law.stanford.edu/organizations/offices/office-of-the-registrar/stanford-law-class-schedule-grids
   url: http://www.law.stanford.edu/organizations/offices/office-of-the-registrar/exam-information
+  url: http://www.law.stanford.edu/organizations/offices/office-of-the-registrar/stanford-law-class-schedule-grids
   url: http://lawreg.stanford.edu/stanford/prereg/schedules.asp
-  url: http://exploredegrees.stanford.edu/academiccalendar/
   url: http://www.stanford.edu/class/math51/51exams.html
+  url: http://exploredegrees.stanford.edu/academiccalendar/
   url: http://www.law.stanford.edu/organizations/offices/office-of-student-affairs/examinations
   url: http://www.stanford.edu/class/math41/exams.html
   url: https://ccnet.stanford.edu/cgi-bin/course.cgi?cc=msande120&action=announcement_menu
@@ -694,8 +694,8 @@ query: scpd stanford
   url: http://scpd.stanford.edu/calendar/calendar.jsp
   url: http://scpd.stanford.edu/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=1145836
   url: http://scpd.stanford.edu/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=1236449
-  url: http://scpd.stanford.edu/news/publicNews.do?method=displayStory&storyIndex=0&activity=Announcements
   url: http://scpd.stanford.edu/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=1060516
+  url: http://scpd.stanford.edu/news/publicNews.do?method=displayStory&storyIndex=0&activity=Announcements
   url: http://scpd.stanford.edu/public/category/courseCategoryCertificateProfile.do?method=load&certificateId=1209602
 query: axess stanford
   url: https://axess.stanford.edu/
@@ -771,8 +771,8 @@ query: stanford online
   url: http://online.stanford.edu/
   url: http://online.stanford.edu/courses
   url: http://scpd.stanford.edu/
-  url: http://ohs.stanford.edu/
   url: http://class.stanford.edu/
+  url: http://ohs.stanford.edu/
   url: http://scpd.stanford.edu/tilesPublic/currentStudent.jsp
   url: http://news.stanford.edu/news/2012/september/online-courses-fall-090712.html
   url: http://news.stanford.edu/news/2012/march/online-courses-mitchell-030612.html
@@ -825,8 +825,8 @@ query: math 108 stanford
   url: http://math.stanford.edu/~thiem/courses/108S/108S.html
   url: http://math.stanford.edu/~mkahle/MATH108.html
   url: http://math.stanford.edu/~thiem/courses/108A.html
-  url: http://math.stanford.edu/~bump/
   url: http://math.stanford.edu/~fthorne/math108/index.html
+  url: http://math.stanford.edu/~bump/
   url: http://math.stanford.edu/~thiem/
   url: http://sporadic.stanford.edu/bump/Math108/
   url: http://math.stanford.edu/~mkahle/syllabus108.pdf
@@ -874,8 +874,8 @@ query: stanford cs coterm
 query: stanford
   url: http://www.stanford.edu/
   url: http://plato.stanford.edu/
-  url: http://stanfordcareers.stanford.edu/
   url: http://www.stanford.edu/admission/
+  url: http://stanfordcareers.stanford.edu/
   url: http://www.stanford.edu/academics/
   url: http://summer.stanford.edu/
   url: http://www.law.stanford.edu/
@@ -906,8 +906,8 @@ query: glassdoor
   url: http://cdcapps.stanford.edu/stanfordcdc/fe/links/browseLinks.do?categoryId=1437
   url: http://www.gsb.stanford.edu/sites/default/files/documents/Recruiting_Orgs_0.pdf
   url: http://alumni.stanford.edu/get/page/loop/may-2010
-  url: http://qcn.stanford.edu/sensor/forum_user_posts.php?userid=19869
   url: http://qcn.stanford.edu/sensor/forum_user_posts.php?userid=19869&offset=-10
+  url: http://qcn.stanford.edu/sensor/forum_user_posts.php?userid=19869
 query: snap stanford
   url: http://snap.stanford.edu/snap/
   url: http://snap.stanford.edu/snap/download.html
@@ -924,8 +924,8 @@ query: assu
   url: http://ballot.stanford.edu/
   url: http://specialfees.stanford.edu/
   url: http://senate.stanford.edu/
-  url: http://greenstore.stanford.edu/
   url: http://unofficial.stanford.edu/?p=35
+  url: http://greenstore.stanford.edu/
   url: http://ssd.stanford.edu/?q=node/28
   url: http://ogc.stanford.edu/university-faqs/student-matters
 query: stanford searchable map
@@ -943,8 +943,8 @@ query: fear the tree
   url: http://news.stanford.edu/thedish/?p=12855
   url: http://www.stanford.edu/dept/pres-provost/cgi-bin/wiki/index.php?title=Cleveland_TN_Print_Tree_Trimming:_Tree_Removal_Service
   url: http://identity.stanford.edu/policies/
-  url: http://www.stanford.edu/~meehan/donnellyr/oaks.html
   url: http://suss.stanford.edu/blog/?p=1521
+  url: http://www.stanford.edu/~meehan/donnellyr/oaks.html
   url: http://store.stanford.edu/products/Party-with-Trees-Tank.html
   url: http://news.stanford.edu/thedish/?cat=13&paged=9
   url: https://news.stanford.edu/thedish/?category_name=best-of&paged=10
@@ -1003,8 +1003,8 @@ query: human computer interaction webinar
   url: http://hci.stanford.edu/cs547/online.html
   url: http://cs547.stanford.edu/
   url: http://hci.stanford.edu/msb/
-  url: http://hci.stanford.edu/courses/
   url: http://scpd.stanford.edu/courses/statistics-courses.jsp
+  url: http://hci.stanford.edu/courses/
   url: http://myvideos.stanford.edu/oce/seminars.aspx
   url: http://scpd.stanford.edu/university-online-courses.jsp
   url: http://scpd.stanford.edu/ppc/business-analysis-courses.jsp?_vsrefdom=Adwords-SDRM
@@ -1061,11 +1061,11 @@ query: stanford library
   url: http://library.stanford.edu/
   url: http://library.stanford.edu/using
   url: http://library.stanford.edu/libraries
-  url: http://library.stanford.edu/hours
   url: http://library.stanford.edu/englib
+  url: http://library.stanford.edu/hours
   url: http://lane.stanford.edu/
-  url: http://library.stanford.edu/libraries/green/about
   url: http://www.gsb.stanford.edu/library
+  url: http://library.stanford.edu/libraries/green/about
   url: http://library.stanford.edu/search-services/socrates
 query: stanford etl
   url: http://etl.stanford.edu/

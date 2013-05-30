@@ -375,18 +375,31 @@ def build_rich_features(queries, documents):
       '''
       # page rank
       feat.append(documents[query][x]['pagerank'])
-
+      
       # title index
       feat.append(compute_mini_index(qitem, title.split()))
 
       # url index
       feat.append(compute_mini_index(qitem, url.split()))
-
+      
       # body index
       if 'body_hits' in documents[query][x]:
         feat.append(compute_mini_index(qitem, documents[query][x]['body_hits']))
       else:
         feat.append(sys.maxint)
+      
+      # header index
+      if 'header' in documents[query][x]:
+        feat.append( min([ compute_mini_index(qitem, u.split()) for u in documents[query][x]['header'] ]) )
+      else:
+        feat.append(sys.maxint)
+      '''
+      # anchor index
+      if 'anchors' in documents[query][x]:
+        feat.append( min([ compute_mini_index(qitem, key.split()) for key in documents[query][x]['anchors'] ]) )
+      else:
+        feat.append(sys.maxint)
+      '''
 
       features.append(feat)
       qryDocList.append((query, x))

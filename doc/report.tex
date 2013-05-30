@@ -36,10 +36,10 @@
 \pagestyle{myheadings}  % Leave this command alone
 
 \section*{Introduction}
-In this assignment, we adopted linear regression and support vector machine and tried different features, to predict relevance and rank query results. 
+In this assignment, we adopted linear regression and support vector machine and tried different features, to predict relevance and rank query results.
 
-Table \ref{tab:all} provides an overall NCDG results we have obtained for different tasks. In the rest of this document,
-we will describe our methodology and findings.
+Table \ref{tab:all} provides an overall NCDG results we have obtained for different tasks on the development test data.
+In the rest of this document, we will describe our methodology and findings.
 \begin{table}[h!]
 \begin{center}
 \begin{tabular}{|c|c|c|}
@@ -47,7 +47,7 @@ we will describe our methodology and findings.
   Task & Method & Test NDCG \\\hline
   1 &  Linear Regression (Pointwise) & 0.8632 \\\hline
   2 & SVM (Pairwise)  & 0.8688 \\\hline
-  3 & SVM with rich features (Pairwise)  & 0.8871 \\ \hline
+  3 & SVM with rich features (Pairwise)  & 0.8884 \\ \hline
   Extra & PRank & 0.8468   \\\hline
 \end{tabular}
 \caption{Summary of results}\label{tab:all}
@@ -55,19 +55,19 @@ we will describe our methodology and findings.
 \end{table}
 
 \section*{Task 1}
-In this task, we train a linear regression model using a pointwise method. 
-As we did in PA3, we represent each query-page pair as a vector of five features. 
+In this task, we train a linear regression model using a pointwise method.
+As we did in PA3, we represent each query-page pair as a vector of five features.
 
 \begin{itemize}
 \item We use sublinear scaling and inverse document frequency when constructing query vectors.
 \item For document vectors, we use term frequency (without any scaling) and length normalization.
-\item For length normalization, we divide all fields by their own field lengths. 
+\item For length normalization, we divide all fields by their own field lengths.
 \item We use tf-idf scores for each field (title, url, body, header, anchor) as features.
 \end{itemize}
 
 The weights learned in this task and manually tuned in PA3 are compared in Table \ref{tab:wt}.
 The NDCG performance on the development test data is $0.8632$, compared to the NDCG score $0.8662$ achieved in PA3.
-As we can see from Table \ref{tab:wt}, there are not any significant similarities between them. 
+As we can see from Table \ref{tab:wt}, there are not any significant similarities between them.
 According to the weights produced by linear regression, body field is the most important feature. On the other hand,
 anchor field is the least important feature, which is questionable. Since linear regression is not robust with outliers,
 the learned weights are not reliable enough to make any importance judgements.
@@ -81,19 +81,19 @@ the learned weights are not reliable enough to make any importance judgements.
   Pointwise linear regression weights & $0.20$ & $0.59$ & $0.12$ & $1.45$ & $0.00$ & $0.8632$ \\
   \hline
   Weights manually tuned in PA3 & $1.0$ & $0.1$ & $0.5$ & $0.3$ & $2.0$ & 0.8662 \\
-  \hline 
+  \hline
 \end{tabular}
 \caption{Weights obtained by two different approaches}\label{tab:wt}
 \end{center}
 \end{table}
 
 \section{Task 2}
-In this task, we train an SVM using a pairwise method. 
+In this task, we train an SVM using a pairwise method.
 We use the same feature as in task 1, but we operate in the pairwise space.
-For any pairs of query-document vector features $\mathbf{x}_i, \mathbf{x}_j$, we compute the difference between them $\mathbf{x}_i - \mathbf{x}_j$ and label them using the relevance score between them. 
+For any pairs of query-document vector features $\mathbf{x}_i, \mathbf{x}_j$, we compute the difference between them $\mathbf{x}_i - \mathbf{x}_j$ and label them using the relevance score between them.
 
-Because SVMs are not robust to high diversity in values of feature, 
-we do standardization on the features. 
+Because SVMs are not robust to high diversity in values of feature,
+we do standardization on the features.
 
 The NDCG score on the development test data is $0.8688$.
 
@@ -106,7 +106,7 @@ page content) with reference to the weight vectors learned to find out why that
 URL is ranked higher/lower in one method and lower/higher in the other. Report
 your finding.
 
-The top result for two queries returned by Linear Regression and SVM respectively are shown in Table \ref{tab:rel}. As we see, SVM performs better than Linear regression in these two queries. 
+The top result for two queries returned by Linear Regression and SVM respectively are shown in Table \ref{tab:rel}. As we see, SVM performs better than Linear regression in these two queries.
 
 
 \begin{table}[h!]
@@ -132,7 +132,7 @@ SVM & stanford cs track &  http://csmajor.stanford.edu/Requirements.shtml & 2.0 
   Method & $w_\textrm{title}$ & $w_\textrm{url}$ & $w_\textrm{header}$ & $w_\textrm{body}$ & $w_\textrm{anchor}$ & NDCG \\
   \hline
   Pointwise linear regression weights & $0.20$ & $0.59$ & $0.12$ & $1.45$ & $0.00$ & $0.8632$ \\
-  \hline 
+  \hline
   Pairwise SVM weightes & 0.12  &  0.35 &  0.14 &  0.06 &  0.03 &  0.8688 \\
   \hline
 \end{tabular}
@@ -156,16 +156,18 @@ We build features, calculate the differences between features vectors, and feed 
 performance. Report the NDCG scores achieved on the development test data
 for these combinations.
 
-The best NDCG score achieved on the development test data is $0.8871$.
+After experimenting with the above features, the best NDCG score achieved on the development test data is $0.8871$.
 We use all the above features except the smallest window feature for anchor fields.
-Since anchor fields are short, smallest windows in bodies are usually quite large and uninformative. Therefore, it is reasonable to exclude this feature from our feature set.
+Since anchor fields are short, smallest windows in anchor fields are usually missing and uninformative.
+Therefore, it is reasonable to exclude this feature from our feature set.
 
-By dropping one feature at a time, we experiments with different combinations of features to see the contributions of different features.
+By dropping one feature at a time, we experiments with different combinations of features to see the contributions of different features. As observed from Table \ref{tab:perform}, we see BM25F score, Page Rank and smallest windows in body fields are huge boosters for performance.
 \begin{table}
 \begin{center}
 \begin{tabular}{|l|l|}
   \hline
   Leaving out feature & NDCG score \\
+  \hline
   Binary ''.pdf'' feature & $0.8868$ \\
   BM25F score & $0.8829$ \\
   Title window & $0.8849$ \\
@@ -174,6 +176,7 @@ By dropping one feature at a time, we experiments with different combinations of
   Header window & $0.8858$ \\
   Anchor window & $\mathbf{0.8871}$ \\
   Page Rank & $0.8822$ \\
+  None & $0.8854$ \\
   \hline
 \end{tabular}
 \caption{NDCG scores with different feature combinations}\label{tab:perform}
