@@ -257,6 +257,21 @@ def compute_body_window(qitem, body):
   return win
 
 
+def compute_mini_index(qitem, content):
+  ret = sys.maxint
+  if isinstance(content, list):
+    for q in qitem:
+      if q in content and content.index(q) < ret:
+        ret = content.index(q)
+  elif isinstance(content, dict):
+    for q in qitem:
+      if q in content and len(content[q]) != 0 and min(content[q]) < ret:
+        ret = min(content[q])
+  else:
+    assert(False)
+  return ret
+
+
 def build_rich_features(queries, documents):
   features, qryDocList = [], []
   table = load_doc_freq()
@@ -360,7 +375,19 @@ def build_rich_features(queries, documents):
       '''
       # page rank
       feat.append(documents[query][x]['pagerank'])
-      
+
+      # title index
+      feat.append(compute_mini_index(qitem, title.split()))
+
+      # url index
+      feat.append(compute_mini_index(qitem, url.split()))
+
+      # body index
+      if 'body_hits' in documents[query][x]:
+        feat.append(compute_mini_index(qitem, documents[query][x]['body_hits']))
+      else:
+        feat.append(sys.maxint)
+
       features.append(feat)
       qryDocList.append((query, x))
   return (features, qryDocList)
