@@ -112,24 +112,29 @@ def build_features(queries, documents):
     # Calculate tf-idf score
     results = queries[query]
     for x in results:
-      feat = []
+      feat, fld_len = [], []
       # title
       title = documents[query][x]['title']
       title_vec = vector_from_text(qitem, title)
       feat.append(vector_dot_product(qvec, title_vec))
-      
+      fld_len.append(len(title.split()))
+
       # url
       url = re.sub(r'\W+', ' ', x)
       url_vec = vector_from_text(qitem, url)
       feat.append(vector_dot_product(qvec, url_vec))
+      fld_len.append(len(url.split()))
 
       # header
       val = 0
+      header_len = 0
       if 'header' in documents[query][x]:
         header_arr = documents[query][x]['header']
         for header in header_arr:
           val = val + vector_dot_product(qvec, vector_from_text(qitem, header))
+          header_len += len(header.split())
       feat.append(val)
+      fld_len.append(header_len)
 
       # body
       if 'body_hits' in documents[query][x]:
@@ -138,18 +143,26 @@ def build_features(queries, documents):
         feat.append(vector_dot_product(qvec, body_vec))
       else:
         feat.append(0)
+      fld_len.append(int(documents[query][x]['body_length']) + 500)
 
       # achors
       val = 0
+      anchor_len = 0
       if 'anchors' in documents[query][x]:
         anchor = documents[query][x]['anchors']
         for key in anchor:
           val = val + vector_dot_product(qvec, [anchor[key] * u for u in vector_from_text(qitem, key)])
+          anchor_len += len(key.split())
       feat.append(val)
+      fld_len.append(anchor_len)
 
       # length normalization
       norm = int(documents[query][x]['body_length']) + 500
-      feat = [float(u) / float(norm) for u in feat]
+      #feat = [float(u) / float(norm) for u in feat]
+      for i in range(len(feat)):
+        if feat[i] != 0:
+          feat[i] /= fld_len[i]
+
 
       features.append(feat)
       qryDocList.append((query, x))
